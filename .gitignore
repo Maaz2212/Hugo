@@ -1,0 +1,26 @@
+# ---- Backend (Python / Flask) ----
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+venv/
+env/
+instance/
+
+# ---- Frontend (React / Node) ----
+node_modules/
+dist/
+build/
+.vite/
+.cache/
+
+# ---- OS / Editor ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ---- Logs ----
+*.log
