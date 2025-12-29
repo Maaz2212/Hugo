@@ -31,12 +31,14 @@ const Sidebar = ({ isCollapsed, toggleSidebar }) => {
         >
             {/* Logo Section */}
             <div className={`h-16 flex items-center ${isCollapsed ? 'justify-center' : 'px-6'}`}>
-                <div className="flex items-center gap-2 overflow-hidden whitespace-nowrap">
-                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <span className="font-bold text-lg">H</span>
-                    </div>
+                <div className="flex items-center gap-3 overflow-hidden whitespace-nowrap">
+                    <img
+                        src="/logo1.png"
+                        alt="Hugo Logo"
+                        className="w-8 h-8 object-contain"
+                    />
                     {!isCollapsed && (
-                        <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                        <span className="text-xl font-bold text-white">
                             Hugo
                         </span>
                     )}

@@ -4,18 +4,18 @@ const HowToUse = () => {
     const steps = [
         {
             number: '01',
-            title: 'Sign Up',
-            description: 'Create your account in seconds using the form above.'
+            title: 'Form fill up',
+            description: 'Get Started by filling up the form above to creates your account.'
         },
         {
             number: '02',
-            title: 'Configure',
-            description: 'Customize your profile and settings to match your needs.'
+            title: 'Explore Data',
+            description: 'Visit the Dashboard to see real-time data and insights in action.'
         },
         {
             number: '03',
-            title: 'Launch',
-            description: 'Start using Hugo and see immediate results in your workflow.'
+            title: 'Test Agent',
+            description: 'Use the Send Email feature for dynamic testing of the AI agent.'
         }
     ];
 

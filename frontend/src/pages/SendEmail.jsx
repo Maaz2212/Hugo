@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Send, AlertCircle, CheckCircle2 } from 'lucide-react';
+import RevealText from '../components/RevealText';
 
 const SendEmail = () => {
     const [formData, setFormData] = useState({
@@ -72,7 +73,9 @@ const SendEmail = () => {
         <div className="min-h-screen bg-gray-50 pt-8 pb-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900">Supplier Email Simulator</h1>
+                    <h1 className="text-3xl font-bold text-gray-900">
+                        <RevealText text="Supplier Email Simulator" />
+                    </h1>
                     <p className="mt-2 text-gray-600">Simulate incoming emails from suppliers to test the AI agent's reaction.</p>
                 </div>
 

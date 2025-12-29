@@ -4,6 +4,8 @@ import Landing from './pages/landing';
 import Dashboard from './pages/dashboard';
 import Profile from './pages/profile';
 import SendEmail from './pages/SendEmail';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 import './App.css';
 
 import Layout from './components/Layout';
@@ -17,6 +19,8 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/send-email" element={<SendEmail />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
         </Route>
       </Routes>
     </Router>

@@ -22,8 +22,8 @@ const Landing = () => {
                         © {new Date().getFullYear()} Hugo. All rights reserved.
                     </p>
                     <div className="flex gap-6">
-                        <a href="#" className="text-gray-400 hover:text-gray-600 text-sm">Privacy Policy</a>
-                        <a href="#" className="text-gray-400 hover:text-gray-600 text-sm">Terms of Service</a>
+                        <a href="/privacy-policy" className="text-gray-400 hover:text-gray-600 text-sm">Privacy Policy</a>
+                        <a href="/terms-of-service" className="text-gray-400 hover:text-gray-600 text-sm">Terms of Service</a>
                     </div>
                 </div>
             </footer>

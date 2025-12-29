@@ -1,1 +1,13 @@
 /* App.css cleared to remove default Vite alignment styles */
+
+@keyframes reveal {
+    0% {
+        opacity: 0;
+        filter: blur(10px);
+    }
+
+    100% {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
