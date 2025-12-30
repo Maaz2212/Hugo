@@ -228,27 +228,30 @@ class ExtractedEvent(BaseModel):
     confidence: float
     extracted_attributes: Dict[str, Optional[Any]]
 email_text = """
-From: operations@voltway.co
-To: orders@supC.com
-Subject: URGENT: Cancel O5021 (Carbon Fiber Frame)
-Date: 2025-04-10 08:55
+From: qa-team@supA.com
+To: engineering@voltway.co
+Subject: URGENT: Quality Alert on S3 V2 Carbon Fiber Frame
+Date: 2025-04-18 08:05
 
-Subject: URGENT: Cancel O5021 (Carbon Fiber Frame)
-From: operations@voltway.co
-To: orders@supC.com
-Date: 2025-04-10 08:55
+Subject: URGENT: Quality Alert on S3 V2 Carbon Fiber Frame
+From: qa-team@supA.com
+To: engineering@voltway.co
+Date: 2025-04-18 08:05
 
-Hello SupC Team,
+Hi Engineering Team,
 
-Please cancel Purchase Order **O5021** for **Carbon Fiber Frame** (part P303).  
-We’ve decided to delay the V1→V2 upgrade rollout, so we no longer need these frames.
+During our final QC check, we identified **hairline cracks** on several units of the **S3 V2 Carbon Fiber Frame** (part **P323**).  
+Affected batch: PO **O5023**, shipped 2025-04-10.
 
-Let me know if there are any cancellation fees. If so, please send an updated invoice.
+Photos attached show stress points near the rear mount.  
+We recommend halting assembly on incoming frames from this batch and returning the lot for inspection.
 
-Thanks,  
-Jordan Lee  
-Warehouse Manager  
-Voltway
+Please advise on next steps for containment and replacement orders.
+
+Regards,  
+Mark Nguyen  
+QA Lead  
+SupA
 """
 
 email_task = Task(
@@ -330,6 +333,8 @@ impact_agent = Agent(
     verbose=True
 )
 class ImpactAssessment(BaseModel):
+    extracted_event_category: str
+    evidence_from_operational_data: dict
     risk_level: str  # high / moderate / low
     reasoning: list[str]
     impact: dict
@@ -348,6 +353,8 @@ Operational data :
 
 
 Your job:
+- return the extracted event category
+- Cite evidence from the operational data to support your analysis
 - Assess risk severity based on business impact (NOT event type)
 - Explain your reasoning
 - Quantify impact where possible
