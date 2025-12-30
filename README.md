@@ -18,7 +18,8 @@ It simulates a real enterprise workflow where **supplier emails** act as operati
 
 ## 🏗️ Architecture Overview
 
-**End-to-end flow:**
+![Hugo Architecture](assets/architecture.png)
+
 
 
 This architecture mirrors how real procurement systems ingest and react to supplier communications.
