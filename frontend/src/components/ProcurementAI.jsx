@@ -112,14 +112,14 @@ const ProcurementAI = () => {
                     {/* Right Column: Content */}
                     <div>
                         <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                            Generative AI for procurement teams
+                            Agentic AI for procurement teams
                         </h2>
                         <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                            Our generative AI <span className="font-semibold text-gray-900">captures, enriches, and makes data accessible</span> with
-                            line-item precision—enabling any user to easily identify price discrepancies, fragmented spend, and other procurement-related KPIs.
+                            Our agentic AI <span className="font-semibold text-gray-900">captures, enriches, and makes data accessible</span> with
+                            line-item precision—enabling and in a dashboard view, any user to easily identify risk alerts, reasoning by agent, and other procurement-related KPIs.
                         </p>
                         <p className="text-lg text-gray-600 leading-relaxed">
-                            Everything is easily accessible through a user-friendly chat interface built on secure, proprietary technology.
+                            Everything is easily accessible through a user-friendly dashboard interface built on secure, proprietary technology.
                         </p>
                     </div>
                 </div>

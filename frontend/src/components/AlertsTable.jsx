@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronRight, MoreHorizontal, Mail, Zap, User, FileText } from 'lucide-react';
+import { useToast } from './Toast';
 
 const AlertsTable = ({ data }) => {
     const [expandedId, setExpandedId] = useState(data.length > 0 ? data[0].id : null);
+    const { showToast } = useToast();
 
     const toggleExpand = (id) => {
         setExpandedId(expandedId === id ? null : id);
@@ -15,6 +17,37 @@ const AlertsTable = ({ data }) => {
             case 'LOW': return 'bg-green-500 text-white';
             default: return 'bg-gray-200 text-gray-800';
         }
+    };
+
+    const handleAction = (action, alert) => {
+        const userEmail = localStorage.getItem('userEmail');
+
+        if (!userEmail) {
+            showToast('Please set your email on the landing page first.', 'error');
+            return;
+        }
+
+        const subject = encodeURIComponent(`[Action: ${action}] ${alert.title}`);
+        const bodyContent = `
+Action Taken: ${action}
+
+Alert Details:
+Title: ${alert.title}
+Risk Level: ${alert.risk}
+Description: ${alert.description}
+
+Department: ${alert.department}
+Problem: ${alert.extracted_event_category || 'N/A'}
+
+This is an automated action notification.
+        `.trim();
+
+        const body = encodeURIComponent(bodyContent);
+
+        // Open mail client
+        window.location.href = `mailto:${userEmail}?subject=${subject}&body=${body}`;
+
+        showToast(`${action} action triggered. Email draft opened for ${userEmail}.`, 'success');
     };
 
     return (
@@ -173,16 +206,28 @@ const AlertsTable = ({ data }) => {
                                         </div>
 
                                         <div className="flex gap-2 mt-4 justify-end">
-                                            <button className="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors">
+                                            <button
+                                                onClick={() => handleAction('Acknowledge', alert)}
+                                                className="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors"
+                                            >
                                                 Acknowledge
                                             </button>
-                                            <button className="px-3 py-1.5 bg-white border border-gray-300 text-gray-700 text-xs font-medium rounded hover:bg-gray-50 transition-colors">
+                                            <button
+                                                onClick={() => handleAction('Assign', alert)}
+                                                className="px-3 py-1.5 bg-white border border-gray-300 text-gray-700 text-xs font-medium rounded hover:bg-gray-50 transition-colors"
+                                            >
                                                 Assign
                                             </button>
-                                            <button className="px-3 py-1.5 bg-white border border-gray-300 text-gray-700 text-xs font-medium rounded hover:bg-gray-50 transition-colors">
+                                            <button
+                                                onClick={() => handleAction('Escalate', alert)}
+                                                className="px-3 py-1.5 bg-white border border-gray-300 text-gray-700 text-xs font-medium rounded hover:bg-gray-50 transition-colors"
+                                            >
                                                 Escalate
                                             </button>
-                                            <button className="px-3 py-1.5 bg-red-600 text-white text-xs font-medium rounded hover:bg-red-700 transition-colors">
+                                            <button
+                                                onClick={() => handleAction('Dismiss', alert)}
+                                                className="px-3 py-1.5 bg-red-600 text-white text-xs font-medium rounded hover:bg-red-700 transition-colors"
+                                            >
                                                 Dismiss
                                             </button>
                                         </div>
