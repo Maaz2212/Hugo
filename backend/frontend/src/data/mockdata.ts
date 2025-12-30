@@ -220,5 +220,56 @@ export const alertsData =[{
   ],
   "id": 5
 },
+
+  {
+  "extracted_event_category": "price_increase",
+  "email_metadata": {
+    "from": "sales@supB.com",
+    "to": "purchasing@voltway.co",
+    "subject": "Price Update for Li-Po 48V 12Ah Battery Pack",
+    "date": "2025-12-30 12:40"
+  },
+  "evidence_from_operational_data": {
+    "stock_levels": "Current stock for P302 is 257 units.",
+    "open_orders": "There are no open purchase orders for P302.",
+    "dispatch_params": "Min stock level is 41, reorder quantity is 146, and reorder interval is 13 days.",
+    "supplier_info": "Supplier SupB has a price of 37.99, lead time of 14 days, and reliability rating of 0.79. Alternative suppliers are SupA at 99.82 with 10 days lead time and 0.98 reliability, and SupC at 27.21 with 11 days lead time and 0.92 reliability."
+  },
+  "risk_level": "high",
+  "reasoning": [
+    "Significant price increase from SupB for part P302.",
+    "SupB's reliability rating (0.79) is lower than alternatives.",
+    "No current open purchase orders to absorb the price change."
+  ],
+  "impact": {
+    "stock_impact": "Current stock levels are sufficient for immediate needs but future orders will be impacted by increased cost.",
+    "orders_affected": "No immediate impact on open orders as there are none, but future purchase orders will be affected.",
+    "cost_estimate": "The cost increase for future orders is substantial due to the price hike from SupB."
+  },
+  "recommendations": [
+    {
+      "description": "Evaluate the price increase from SupB and compare with alternative suppliers.",
+      "owner": "procurement",
+      "priority": "high"
+    },
+    {
+      "description": "Consider switching to a more reliable and cost-effective supplier like SupC if quality is comparable.",
+      "owner": "procurement",
+      "priority": "high"
+    },
+    {
+      "description": "Place a reorder for P302 before the price increase takes full effect if feasible.",
+      "owner": "procurement",
+      "priority": "medium",
+      "due_date_hint": "within 1-2 days"
+    }
+  ],
+  "affected_departments": [
+    "procurement",
+    "finance",
+    "supply chain"
+  ],
+  "id": 6
+},
 ];
     

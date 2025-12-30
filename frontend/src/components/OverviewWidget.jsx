@@ -1,13 +1,15 @@
 import React from 'react';
 
 const OverviewWidget = ({ data }) => {
-    // Calculate counts based on risk level
-    const highRiskCount = data.filter(item => item.risk === 'HIGH').length;
-    // Note: Mock data has risk_level "Moderate" in json but "risk": "MODERATE" in top level. 
-    // We'll check both for robustness or just use the top level key 'risk' which I established in mockdata.
-    const moderateRiskCount = data.filter(item => item.risk === 'MODERATE').length;
-    // Assuming anything else or explicit LOW is low
-    const lowRiskCount = data.filter(item => item.risk === 'LOW').length; // Mock has one undefined in status/risk, let's assume standard values
+    // Helper to normalize risk level from data which might use 'risk' or 'risk_level'
+    const getRisk = (item) => {
+        const r = item.risk || item.risk_level;
+        return r ? r.toUpperCase() : 'UNKNOWN';
+    };
+
+    const highRiskCount = data.filter(item => getRisk(item) === 'HIGH').length;
+    const moderateRiskCount = data.filter(item => getRisk(item) === 'MODERATE').length;
+    const lowRiskCount = data.filter(item => getRisk(item) === 'LOW').length;
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">

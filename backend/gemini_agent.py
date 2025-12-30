@@ -34,71 +34,46 @@ def run_full_pipeline(email_text: str, api_key: str) -> dict:
         "order_id": {"example": "O5007", "type": "string"},
         "supplier": {"example": "SupA", "type": "string"},
     }
-    MOCKDATA_PATH = "frontend//src//data//mockdata.ts"
+    # Path relative to backend/ directory
+    MOCKDATA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend", "src", "data", "mockdata.ts"))
+
     def get_next_id() -> int:
-        """FIXED: Properly extracts IDs from JSON."""
-        if not os.path.exists(MOCKDATA_PATH):
-            return 1
-        
-        try:
-            with open(MOCKDATA_PATH, 'r') as f:
-                content = f.read()
-            
-            # ✅ FIXED REGEX: Matches JSON "id": number
-            id_matches = re.findall(r'"id"\s*:\s*(\d+)', content)
-            
-            if id_matches:
-                max_id = max(map(int, id_matches))
-                print(f"Found IDs: {id_matches}, next ID: {max_id + 1}")
-                return max_id + 1
-            
-            return 1
-        
-        except Exception as e:
-            print(f"ID detection failed: {e}, using 1")
-            return 1
-    def append_to_mockdata(assessment: Dict[str, Any]):
-        """ONLY appends data to existing mockdata.ts - NO interface."""
+        """Simple counter based on existing file doesn't apply if we are overwriting, 
+           but we can keep it if we want to increment IDs across overwrites (harder)
+           or just start fresh. Let's start at 1 for fresh single-item view or 
+           try to allow accumulation if the user actually wanted that? 
+           User said 'remove existing values' -> implies overwriting."""
+        return 1
+
+    def overwrite_mockdata(assessment: Dict[str, Any]):
+        """Overwrites mockdata.ts with the new assessment data, removing old values."""
     
-        # Add ID if missing
+        # Add ID 
         if "id" not in assessment:
-            assessment["id"] = get_next_id()
+            assessment["id"] = 1 # Always 1 since we are single-item view? Or random?
+        
+        # Ensure 'risk' field exists and is uppercase for frontend compatibility
+        if "risk_level" in assessment and "risk" not in assessment:
+            assessment["risk"] = assessment["risk_level"].upper()
         
         try:
             # Format assessment as TypeScript object
             ts_object = json.dumps(assessment, indent=2)
             
-            if not os.path.exists(MOCKDATA_PATH):
-                # Create MINIMAL file - just data array
-                content = f"export const alertsData = [\n  {ts_object}\n];"
-            else:
-                # Read existing file
-                with open(MOCKDATA_PATH, 'r') as f:
-                    content = f.read()
-                
-                # Find array and append
-                array_match = re.search(r'(export const alertsData\s*=\s*\[)(.*?)\];', content, re.DOTALL)
-                if array_match:
-                    prefix = array_match.group(1)
-                    existing = array_match.group(2).rstrip(',')
-                    new_item = f"\n  {ts_object},"
-                    new_content = f"{prefix}{existing}{new_item}\n];"
-                    content = content.replace(array_match.group(0), new_content)
-                else:
-                    content = f"export const alertsData = [\n{ts_object}\n];"
-
+            # Construct the FULL file content with ONLY this item
+            content = f"export const alertsData = [\n  {ts_object}\n];"
             
             # Ensure directory exists
             os.makedirs(os.path.dirname(MOCKDATA_PATH), exist_ok=True)
             
-            # Write ONLY data
+            # WRITEMODE 'w' truncates the file
             with open(MOCKDATA_PATH, 'w') as f:
                 f.write(content)
             
-            print(f"✅ Saved ID {assessment['id']} to mockdata.ts")
+            print(f"✅ Overwrote mockdata.ts with ID {assessment['id']}")
             
         except Exception as e:
-            print(f"❌ Mockdata failed: {e}")
+            print(f"❌ Mockdata write failed: {e}")
             
         
 
@@ -467,7 +442,7 @@ def run_full_pipeline(email_text: str, api_key: str) -> dict:
         impact_assessment = ImpactAssessment(**impact_raw)
         result=impact_assessment.model_dump()
         result["id"] = get_next_id()  # Add ID
-        append_to_mockdata(result)
+        overwrite_mockdata(result)
         print("\n=== IMPACT ASSESSMENT ===")
         print(json.dumps(result, indent=2))
         return result
@@ -478,6 +453,6 @@ def run_full_pipeline(email_text: str, api_key: str) -> dict:
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
         }
         error_result["id"] = get_next_id()
-        append_to_mockdata(error_result)
+        overwrite_mockdata(error_result)
         return error_result
         

@@ -5,10 +5,15 @@ const AlertsChart = ({ data }) => {
         const total = data.length;
         if (total === 0) return { total: 0, segments: [] };
 
+        const getRisk = (item) => {
+            const r = item.risk || item.risk_level;
+            return r ? r.toUpperCase() : 'UNKNOWN';
+        };
+
         const counts = {
-            HIGH: data.filter(d => d.risk === 'HIGH').length,
-            MODERATE: data.filter(d => d.risk === 'MODERATE').length,
-            LOW: data.filter(d => d.risk === 'LOW').length,
+            HIGH: data.filter(d => getRisk(d) === 'HIGH').length,
+            MODERATE: data.filter(d => getRisk(d) === 'MODERATE').length,
+            LOW: data.filter(d => getRisk(d) === 'LOW').length,
         };
 
         const radius = 40;
