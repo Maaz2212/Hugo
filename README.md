@@ -101,6 +101,11 @@ Open a new terminal, activate the virtual environment again, then:
 cd backend
 python server.py
 ```
+Open a new terminal:
+```
+cd backend
+python main.py
+```
 ### ▶️ How to Use the Application
 ```
 Open http://localhost:5173
