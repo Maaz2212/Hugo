@@ -81,10 +81,11 @@ Windows
 set GEMINI_API_KEY=<YOUR_API_KEY>
 ```
 ### 4️⃣ Install Backend Dependencies
-```pip install -r backend/requirements.txt```
+```pip install -r requirements.txt```
 
 ### 5️⃣ Start the Frontend
-```cd frontend
+```
+cd frontend
 npm install
 npm run dev
 ```
