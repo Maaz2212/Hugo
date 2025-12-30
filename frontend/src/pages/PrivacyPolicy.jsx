@@ -7,7 +7,6 @@ const PrivacyPolicy = () => {
                 <h1 className="text-3xl font-bold text-gray-900 mb-8">Privacy Policy</h1>
 
                 <div className="space-y-6 text-gray-600">
-                    <p className="text-sm text-gray-400">Last updated: {new Date().toLocaleDateString()}</p>
 
                     <section>
                         <h2 className="text-xl font-semibold text-gray-800 mb-3">1. Introduction</h2>
