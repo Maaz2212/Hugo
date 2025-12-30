@@ -17,17 +17,10 @@ const AlertsTable = ({ data }) => {
         }
     };
 
-    const getStatusColor = (status) => {
-        if (!status) return 'bg-gray-200 text-gray-400';
-        if (status === 'NEW') return 'bg-red-500 text-white';
-        return 'bg-gray-100 text-gray-800';
-    };
-
     return (
         <div className="bg-white shadow rounded-lg overflow-hidden">
             {/* Table Header */}
-            <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                <div className="col-span-1">Status</div>
+            <div className="grid grid-cols-11 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 <div className="col-span-1">Risk</div>
                 <div className="col-span-4">Alert Title</div>
                 <div className="col-span-2">Affected</div>
@@ -42,17 +35,13 @@ const AlertsTable = ({ data }) => {
                     <div key={alert.id} className="bg-white">
                         {/* Main Row */}
                         <div
-                            className={`grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-gray-50 cursor-pointer ${expandedId === alert.id ? 'bg-gray-50' : ''}`}
+                            className={`grid grid-cols-11 gap-4 px-6 py-4 items-center hover:bg-gray-50 cursor-pointer ${expandedId === alert.id ? 'bg-gray-50' : ''}`}
                             onClick={() => toggleExpand(alert.id)}
                         >
                             <div className="col-span-1 flex items-center gap-2">
                                 <button className="text-gray-400">
                                     {expandedId === alert.id ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
                                 </button>
-                                {alert.status && <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${getStatusColor(alert.status)}`}>{alert.status}</span>}
-                                {!alert.status && <div className="w-8 h-4 bg-gray-200 rounded animate-pulse"></div>}
-                            </div>
-                            <div className="col-span-1">
                                 <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${getRiskColor(alert.risk)}`}>{alert.risk}</span>
                             </div>
                             <div className="col-span-4">

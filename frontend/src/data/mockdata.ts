@@ -1,7 +1,6 @@
 export const alertsData = [
     {
         id: 1,
-        status: "NEW",
         risk: "HIGH",
         title: "Quality Alert - S3 V2 Frame",
         description: "Critical reports indicate failure during stress testing; potential supplier manufacturing deviation.",
@@ -56,7 +55,6 @@ export const alertsData = [
     },
     {
         id: 2,
-        status: "",
         risk: "MODERATE",
         title: "Delay - O5007 Motor",
         description: "Shipment delayed by 3 days.",
@@ -79,7 +77,6 @@ export const alertsData = [
     },
     {
         id: 3,
-        status: "",
         risk: "HIGH",
         title: "Urgent Cancellation",
         description: "Customer cancelled large order.",
