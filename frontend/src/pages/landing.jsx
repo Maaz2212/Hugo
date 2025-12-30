@@ -4,6 +4,7 @@ import Hero from '../components/Hero';
 import Services from '../components/Services';
 import Customers from '../components/Customers';
 import HowToUse from '../components/HowToUse';
+import ProcurementAI from '../components/ProcurementAI';
 
 const Landing = () => {
     return (
@@ -13,6 +14,7 @@ const Landing = () => {
                 <Hero />
                 <Services />
                 <HowToUse />
+                <ProcurementAI />
                 <Customers />
             </main>
 

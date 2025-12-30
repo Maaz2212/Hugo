@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronRight, MoreHorizontal, Mail, Zap, User, FileText } from 'lucide-react';
+import { useToast } from './Toast';
 
 const AlertsTable = ({ data }) => {
     const [expandedId, setExpandedId] = useState(data.length > 0 ? data[0].id : null);
+    const { showToast } = useToast();
 
     const toggleExpand = (id) => {
         setExpandedId(expandedId === id ? null : id);
@@ -17,17 +19,41 @@ const AlertsTable = ({ data }) => {
         }
     };
 
-    const getStatusColor = (status) => {
-        if (!status) return 'bg-gray-200 text-gray-400';
-        if (status === 'NEW') return 'bg-red-500 text-white';
-        return 'bg-gray-100 text-gray-800';
+    const handleAction = (action, alert) => {
+        const userEmail = localStorage.getItem('userEmail');
+
+        if (!userEmail) {
+            showToast('Please set your email on the landing page first.', 'error');
+            return;
+        }
+
+        const subject = encodeURIComponent(`[Action: ${action}] ${alert.title}`);
+        const bodyContent = `
+Action Taken: ${action}
+
+Alert Details:
+Title: ${alert.title}
+Risk Level: ${alert.risk}
+Description: ${alert.description}
+
+Department: ${alert.department}
+Problem: ${alert.extracted_event_category || 'N/A'}
+
+This is an automated action notification.
+        `.trim();
+
+        const body = encodeURIComponent(bodyContent);
+
+        // Open mail client
+        window.location.href = `mailto:${userEmail}?subject=${subject}&body=${body}`;
+
+        showToast(`${action} action triggered. Email draft opened for ${userEmail}.`, 'success');
     };
 
     return (
         <div className="bg-white shadow rounded-lg overflow-hidden">
             {/* Table Header */}
-            <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                <div className="col-span-1">Status</div>
+            <div className="grid grid-cols-11 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 <div className="col-span-1">Risk</div>
                 <div className="col-span-4">Alert Title</div>
                 <div className="col-span-2">Affected</div>
@@ -42,17 +68,13 @@ const AlertsTable = ({ data }) => {
                     <div key={alert.id} className="bg-white">
                         {/* Main Row */}
                         <div
-                            className={`grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-gray-50 cursor-pointer ${expandedId === alert.id ? 'bg-gray-50' : ''}`}
+                            className={`grid grid-cols-11 gap-4 px-6 py-4 items-center hover:bg-gray-50 cursor-pointer ${expandedId === alert.id ? 'bg-gray-50' : ''}`}
                             onClick={() => toggleExpand(alert.id)}
                         >
                             <div className="col-span-1 flex items-center gap-2">
                                 <button className="text-gray-400">
                                     {expandedId === alert.id ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
                                 </button>
-                                {alert.status && <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${getStatusColor(alert.status)}`}>{alert.status}</span>}
-                                {!alert.status && <div className="w-8 h-4 bg-gray-200 rounded animate-pulse"></div>}
-                            </div>
-                            <div className="col-span-1">
                                 <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${getRiskColor(alert.risk)}`}>{alert.risk}</span>
                             </div>
                             <div className="col-span-4">
@@ -184,16 +206,28 @@ const AlertsTable = ({ data }) => {
                                         </div>
 
                                         <div className="flex gap-2 mt-4 justify-end">
-                                            <button className="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors">
+                                            <button
+                                                onClick={() => handleAction('Acknowledge', alert)}
+                                                className="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors"
+                                            >
                                                 Acknowledge
                                             </button>
-                                            <button className="px-3 py-1.5 bg-white border border-gray-300 text-gray-700 text-xs font-medium rounded hover:bg-gray-50 transition-colors">
+                                            <button
+                                                onClick={() => handleAction('Assign', alert)}
+                                                className="px-3 py-1.5 bg-white border border-gray-300 text-gray-700 text-xs font-medium rounded hover:bg-gray-50 transition-colors"
+                                            >
                                                 Assign
                                             </button>
-                                            <button className="px-3 py-1.5 bg-white border border-gray-300 text-gray-700 text-xs font-medium rounded hover:bg-gray-50 transition-colors">
+                                            <button
+                                                onClick={() => handleAction('Escalate', alert)}
+                                                className="px-3 py-1.5 bg-white border border-gray-300 text-gray-700 text-xs font-medium rounded hover:bg-gray-50 transition-colors"
+                                            >
                                                 Escalate
                                             </button>
-                                            <button className="px-3 py-1.5 bg-red-600 text-white text-xs font-medium rounded hover:bg-red-700 transition-colors">
+                                            <button
+                                                onClick={() => handleAction('Dismiss', alert)}
+                                                className="px-3 py-1.5 bg-red-600 text-white text-xs font-medium rounded hover:bg-red-700 transition-colors"
+                                            >
                                                 Dismiss
                                             </button>
                                         </div>

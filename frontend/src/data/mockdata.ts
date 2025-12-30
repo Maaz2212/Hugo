@@ -1,7 +1,6 @@
 export const alertsData = [
     {
         id: 1,
-        status: "NEW",
         risk: "HIGH",
         title: "Quality Alert - S3 V2 Frame",
         description: "Critical reports indicate failure during stress testing; potential supplier manufacturing deviation.",
@@ -56,7 +55,6 @@ export const alertsData = [
     },
     {
         id: 2,
-        status: "",
         risk: "MODERATE",
         title: "Delay - O5007 Motor",
         description: "Shipment delayed by 3 days.",
@@ -79,7 +77,6 @@ export const alertsData = [
     },
     {
         id: 3,
-        status: "",
         risk: "HIGH",
         title: "Urgent Cancellation",
         description: "Customer cancelled large order.",
@@ -98,6 +95,28 @@ export const alertsData = [
             to: "Procurement",
             subject: "Urgent Order Cancellation",
             received: "2 days ago, 09:00 AM",
+        },
+    },
+    {
+        id: 4,
+        risk: "LOW",
+        title: "Routine Maintenance",
+        description: "Scheduled maintenance for assembly line B.",
+        affected: "Line B",
+        department: "Maintenance",
+        date: "3 days ago",
+        extracted_event_category: "maintenance",
+        evidence_from_operational_data: {},
+        risk_level: "Low",
+        reasoning: ["Routine activity, no unplanned downtime."],
+        impact: {},
+        recommendations: [],
+        affected_departments: ["Maintenance"],
+        email_metadata: {
+            from: "Facility Manager",
+            to: "Production",
+            subject: "Maintenance Schedule",
+            received: "3 days ago, 08:00 AM",
         },
     },
 ];
